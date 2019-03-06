@@ -1,6 +1,8 @@
 # dDials
 A Dials framework which allows simple customisation of colours and ranges etc.
 
+![alt text](https://github.com/MikePVBroughton/dDials/raw/master/Example_Dials.jpg)
+
 These dials are free to use, butcher and report bugs on. They are designed primerily for boat dials - but feel free to use them in any way you want.
 
 The are a multitude of dials shown in the example file, Dials.html in the src folder.
