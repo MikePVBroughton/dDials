@@ -1,16 +1,13 @@
 # dDials
 A Dials framework which allows simple customisation of colours and ranges etc.
 
-# Free and Open Source Dials
-
-## Current Version 1.3
-
 These dials are free to use, butcher and report bugs on. They are designed primerily for boat dials - but feel free to use them in any way you want.
 
 The are a multitude of dials shown in the example file, Dials.html in the src folder.
 
 For a dial we have the following options;
 
+<pre>
 var myDial = new dDial( { 
   element            : "dialHTML",    _(mandatory)_ Where to render
   name               : "Small",       _(mandatory)_ Title for dial - MUST be unique on page
@@ -27,6 +24,7 @@ var myDial = new dDial( {
   bevelColour1       : "#c0c0c0",     _(default)_ One of the bevel colours (gradient)
   bevelColour2       : "#f0f0f0"      _(default)_ Another colour doe the bevel (gradient) 
 });
+</pre>
 
 And for the needle we have the following (all angles measured from bottom centre clockwise);
 
