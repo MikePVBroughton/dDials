@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<Title>Free and Open Source Dials</Title>
+		<link REL=StyleSheet TYPE="text/css" href="css/dDial.css"/>
+		<script type="text/javascript" src="dDial.js" ></script>
+		<style>
+			h2 {
+				clear:both;
+			}
+			body {
+				color: #fff;
+				font-family: arial,verdana,sans-serif;
+				background: #333;
+				background: linear-gradient(to bottom, rgb(25, 25, 44), rgb(35, 54, 94));
+				background-attachment: fixed;
+				margin: 0 0.5em 0.5em 0.5em;
+			}
+			pre {
+				background-color:#ccc;
+				padding:20px;
+				display:block;
+				margin-left:5%;
+				color:black;
+			}
+			.fixbottom {
+				width:100%;
+				height:50px;
+				position:fixed;
+				bottom:0px;
+				background: linear-gradient(to bottom, rgb(25, 25, 44), rgb(35, 54, 94));
+				
+			}
+			.digit {
+			    font-family: monospace;
+			    font-size: 17px;
+			    padding-top: 1px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1>Free and Open Source Dials</h1>
+		<h2>Current Version 1.3</h2>
+		<p>These dials are free to use, butcher and report bugs on.  They are designed primerily for boat dials - but feel free to use them in any way you want.</p>
+		<p>The are a multitude of dials shown below, each with demo code detailing how to use them - have fun and mention me if you use them.</p>
+		<p>At the bottom of this screen are 2 buttons and a slider.  Play with them to see the dials respond.</p>
+		<h2>Standard Dial</h2>
+		<p>If you just add a dial to your page with almost nothing specified, you get this.</p>
+		<div id="dial1"></div>
+		<p>You must retain the dNeedle reference to update the needle position.  The needles position is not based on angles, but on the input value it is displaying - the code takes care of the angles.</p>
+		<p>Lets look at the code for the above (ignoring the link for the CSS and JS itself, we find this code.</p>
+		<pre>&lt;div id="dialHTML"&gt;&lt;/div&gt;</pre>
+		<p>Then in a script tag or in your JS file, you need to do two things minimum.  Firstly you need to create the dial, and then you add needles to it.  This may sound odd, but it allows you to have multiple needles on the same dial.</p>
+<pre>var myDial = new dDial( { element:"dialHTML", name:"Test Dial" });<br/>
+var myNeedle = new dNeedle(myDial, {name:"Needle"});</pre>
+		<p>And thats it!  If nothing is given the default range is 0-50.  To alter the needle value simple call the function below referencing the needle you want to change (in this case myNeedle...)</p>
+		<pre>myNeedle.setValue(<i>value</i>);</pre>
+		<p>The setValue routine ensures that the value is within bounds and then works out the angle to show the needle.</p>
+		<h2>A more complex example</h2>
+		<p>So here is a slightly more complex example.</p>
+		<div id="dial3"></div>
+		<p>Here, we alter the scale, the size of the dial, and the tic spacing.</p>
+<pre>var myDial = new dDial( { <br/>  element:"dialHTML", <br/>  name:"Small", <br/>  size:170 });<br/><br/>
+var myNeedle = new dNeedle(<br/>  myDial, <br/>  {<br/>    name:"Fuel", <br/>    minV:0, <br/>    maxV:12, <br/>    minA:200, <br/>    maxA:340, <br/>    smallTic:1, <br/>    largeTic:3, <br/>    textTic:6 <br/>    textDir:"Normal", <br/>    margin:8<br/>  });</pre>
+		<h2>Other examples</h2>
+		<p>Here are many more examples showcasing what it can do out of the box.  I won't explain them all as they are fairly easy to understand by looking at the code behind.</p>
+		<p>Look at the bottom of this page for all options you can play with.</p>
+		<div id="dial2"></div>
+		<p>The above dial has 2 needles added to it, showing a battery and something else.  Note that the battery doesn't start at 0.  Also note that the right hand needle has clockwise = false meaning the numbers go the otherway (anticlockwise infact!)</p>
+		<p>Also note that foreDial is set to true, rendering the little inner dial.  We also add some HTML with a known ID and ask the battery needle to update this on change.</p>		
+		<div id="dial4"></div>
+		<p>Now we just have 3 needles on the same dial!</p>
+		<div id="dial5"></div>
+		<p>And an example of changing the dial colour, removing tics and leaving only numbers which are coloured differently to normal and moved outwards as well to ensure a better looking dial.</p>
+		<div id="dial6"></div>
+		<p>And a clock with custom image and 3 dials added to it.  Note each needle has a custom image.</p>
+		<div id="dial7"></div>
+		<p>And a dial with 2 scales but one needle.  This is done by adding a second needle but specifying "none" for the image path.
+		<div id="wind"></div>
+		<p>And just another example.</p>
+		<h2>Text Direction Examples</h2>
+		<div>
+			<div id="dialText1" style="float:left;"></div><div id="dialText2" style="float:left;"></div><div id="dialText3" style="float:left;"></div>
+			</div>
+			<p style='clear:both'><br/>The default for textDir is Horizontal.  Note if using large numbers then you will probably have to play around with textGap to ensure fit.</p>
+			<p>Note that text below the horizon is flip for Tanget, and flipped about the vertical for Normal to aid reading ability.</p>
+		<h2>Margin Examples</h2>
+		<div>
+			<div id="dialMar1" style="float:left;"></div><div id="dialMar2" style="float:left;"></div><div id="dialMar3" style="float:left;"></div>
+			</div>
+		<p style='clear:both'><br/>The margin allows you to put two scales on the same dial for example, or just to make things look flush if you prefer.</p>
+		<h2>Min/Max bar example</h2>
+		<div id="minmaxDial"></div>
+		<p>The above dial has a min and max bar hidden within it.  If you change the value of the needle using the slider below it draws a bar (of course totally configurable) between the min and max values since last reset.</p>
+		<p>You reset the dial by simply clicking it, and the max min are set to the current value.  This could be useful for max speed today, or on this route, or lowest battery value overnight etc.</p>
+		<h2>Options</h2>
+		<p>For a dial we have the following options;</p>
+		<pre>var myDial = new dDial( { 
+  element            : "dialHTML",    <i>(mandatory)</i> Where to render
+  name               : "Small",       <i>(mandatory)</i> Title for dial - MUST be unique on page
+  size               : 400            <i>(default)</i> Size in pixels
+  backImage          : null,          <i>(default)</i> Optional backimage 
+  foreDial           : false,         <i>(default)</i> Should the fore dial be shown
+  foreImage          : null,          <i>(default)</i> Image for fore dial
+  foreSize           : 130,           <i>(default)</i> What size should the fore dial be 
+  foreBackColour     : "#222",        <i>(default)</i> Not implemented yet
+  foreHTML           : null,          <i>(default)</i> Pure HTML to be rendered in the dial
+  foreBevelThickness : 2,             <i>(default)</i> The thickness of the bevel on the fore dial
+  backColour         : "#111",        <i>(default)</i> Backcolour if no image
+  bevelThickness     : 5,             <i>(default)</i> The thickness of the bevel on the mail dial 
+  bevelColour1       : "#c0c0c0",     <i>(default)</i> One of the bevel colours (gradient)
+  bevelColour2       : "#f0f0f0"      <i>(default)</i> Another colour doe the bevel (gradient) 
+});</pre>
+		<p>And for the needle we have the following (all angles measured from bottom centre clockwise);</p>
+		<pre>var myNeedle = new dNeedle(<br/>  myDial, <i>(Mandatory)</i> Handle to dial to put the needle on
+  {
+  name               : "Fuel",        <i>(mandatory)</i> Name of needle, unique to dial.
+  minV               : 0,             <i>(default)</i> Minimum value
+  maxV               : 50,            <i>(default)</i> Maximum value
+  minA               : 30,            <i>(default)</i> Angle (deg) from bottom center clockwise 
+  maxA               : 330,           <i>(default)</i> As above
+  smallTic           : 1,             <i>(default)</i> Draw a small tic mark every '1' value.
+  smallTicColour     : "#BBB",        <i>(default)</i> RGB or 'none' for no tic
+  smallTicSize       : 15,            <i>(default)</i> In pixels
+  largeTic           : 5,             <i>(default)</i> Draw a large tic mark every '5' values.
+  largeTicColour     : "#FFF",        <i>(default)</i> RGB or 'none' for no tic
+  largeTicSize       : 30,            <i>(default)</i> In pixels
+  textTic            : 5,             <i>(default)</i> Draw a text numeric every '5' values.
+  textColour         : "#CCC",        <i>(default)</i> RGB
+  textDir            : "Horizontal",  <i>(default)</i> "Tangent" or "Normal" are other options.
+  clockwise          : true,          <i>(default)</i> Which was do the numbers go.
+  colourBars         : null,          <i>(default)</i> See below.
+  needlePath         : "needle0.png", <i>(default)</i> Path to image to use. 'none' means no needle, 
+                                                only scale drawn.
+  margin             : 20,            <i>(default)</i> Gap between dial edge and tics being drawn
+  fontSize           : 20,            <i>(default)</i> Font size to use on dial.
+  fontName           : "Arial",       <i>(default)</i> Font to use.
+  fontGap            : 45,            <i>(default)</i> Distance from tic to font on dial.
+  foreUpdateID       : null           <i>(default)</i> Will attempt to update the text of this field
+                                                to the VALUE of the needle.
+  showMaxMin         : false,         <i>(default)</i> Show th	e min max indicators
+  lastMinValue       : null,          <i>(default)</i> What is/was the last min - can be used to set it.
+  lastMaxValue       : null,          <i>(default)</i> What is/was the last max - can be used to set it. 
+  minValueCol        : "#666",        <i>(default)</i> The colour gradient for the minimum
+  maxValueCol        : "#FAA",        <i>(default)</i> The colour gradient for the maximum
+  minMaxRadius       : 75,            <i>(default)</i> The offset from the dial outer edge to draw from
+  minMaxWidth        : 20             <i>(default)</i> The width of the line to draw
+  });</pre>
+		<p>ColourBars is an array which allows you to draw the gradients or solid colours around the edge of the needle dial.  Simple specify as below and pass the array into the needle when creating it.<p>
+		<pre>
+var portstarBar =
+  [
+   {minA: 30, maxA: 180, minCol: "#f00", maxCol: "#000", width: 10},
+   {minA: 180, maxA: 330, minCol: "#000", maxCol: "#0f0", width: 10}
+  ];
+   
+  minA   - The angle to start drawing from
+  maxA   - The angle to stop drawing
+  minCol - The colour to start from
+  maxCol - The colour to end on (can be the same as minCol for solid
+  width  - How thick should this bar be.  Note if negative then the bar
+           is drawn outside of the dial Tics, See multi example above.
+</pre>
+<p>The actual code above is used on the Wind Direction example above.</p>
+			<p>You must have at least one entry for a colourbar, else pass null.  You may have as many entries as you wish, but don't go bonkers.</p>
+	<h2>Download</h2>
+	<p>Here is a link to a zip file for version 1.0.  Included is everything needed to make this page.  Also included is a GIMP file with the needles arranged in layers.  If you want to add your own paste a new layer and line it up so that the fulcrum is on the yellow crosses - Open the file to understand!</p>
+	<a href="dDials.zip">Download ZIP file</a>
+	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+		<div class='fixbottom'>
+			<button onclick='SetOn();'>All On</button>
+			<button onclick='SetOff();'>All Off</button>
+			<input type="range" min="0" max="100" value="1" id="slider" onchange="callUpdate();" />
+		</div>
+	</body>
+
+	<script type="text/javascript">
+
+	var N1, N2, N3, N4, N5, N6, N7, N8, N9, N9bar, rudLarge, rudSmall;
+	var clockHour;
+	var clockMinute;
+	var clockSecond;
+	createDials();
+	
+	function createDials(){
+			
+		var D1 = new dDial( { element:"dial1", name:"Test Dial" });
+		
+		var D2 = new dDial( { element:'dial2', name:'Battery', size: 350,
+			foreDial:true, foreHTML :"<img style='width:60px;padding-top:22px' src='images/battery.png'><br/><div id='battIDValue' class='digit'>11.0</div>"});
+		
+		var D3 = new dDial( { element:'dial3', name:'Small', size:170});
+		var D4 = new dDial( { element:'dial4', name:'Multi', size:250});
+		var D5 = new dDial( { element:'dial5', name:'Bright Dial', backColour:'#fff', foreColour: "#000", size: 500});
+		var D6 = new dDial( { element:'dial6', name:'Clock',size: 300,	backImage:"images/rosyclock.jpg", backColour:"#FFF0"});
+		var D7 = new dDial( { element:'dial7', name:'Pressure',size: 350, foreSize:100,foreDial:true, foreHTML:"<div style='padding-top:31px;color:red'>mmWc</div>mBar"});
+		var D8 = new dDial( { element:'wind', name:'Wind Direction',size: 350});
+		
+		// Add colour bars to an array
+		var Bar1 = [];
+		Bar1.push(new colourBar(20,50,"#f00","#f00", 30));
+		Bar1.push(new colourBar(40,110,"#f00","#0f0", 10));
+		Bar1.push(new colourBar(110,160,"#0f0","#0f0", 10));
+
+		var Bar2 = [];
+		Bar2.push(new colourBar(313,340,"#f00","#f00", -10));
+
+		var blueBar = [];
+		blueBar.push(new colourBar(0,180,"#00f","#00f", -10));
+		blueBar.push(new colourBar(0,180,"#f00","#00f", 10));
+
+		// Add colour bars to an array in a different way
+		var portstarBar =[
+			{minA: 30, maxA: 180, minCol: "#f00", maxCol: "#000", width: 10},
+			{minA: 180, maxA: 330, minCol: "#000", maxCol: "#0f0", width: 10}];
+
+		// Create the NEEDLES
+		N1 = new dNeedle(D1, {name:"Needle"});
+			
+		N2 = new dNeedle(D2, {name:"Battery", minV:11, maxV:14, minA:20, maxA:160,
+			smallTic: 0.5, largeTic:1,	colourBars: Bar1, margin:8, foreUpdateID:'battIDValue'});
+			
+		N3 = new dNeedle(D2, {name:"Fuel", minV:50, maxV:100, minA:200, maxA:340, 
+			smallTic:2.5, largeTic:10, textTic:10, clockwise: false, 
+			textDir:"Normal", margin:8});
+			
+		N4 = new dNeedle(D3, {name:"Volume",minV:0,maxV:12, minA:80, maxA:280, 
+			smallTic:1, largeTic:3, textTic:6, textDir: "Tangent", fontSize:15,
+			smallTicSize:5, largeTicSize:10 });
+			
+		N5 = new dNeedle(D4, {name:"Water", minV:0, maxV:1, minA:0, maxA:180, 
+			smallTic:0.1, largeTic:1, textTic: 0.5, colourBars: blueBar	});
+			
+		N6 = new dNeedle(D4, {name:"Waste", minV:0, maxV:1, minA:200, maxA:260,
+			smallTic:0.1, largeTic:1	, textTic:0 , clockwise:false} );
+			
+		N7 = new dNeedle(D4, {name:"Diesel", minV:0, maxV:1, minA:280, maxA:340,
+			smallTic:0.1, largeTic:1, colourBars:Bar2, textTic:0	});
+			
+		N8 = new dNeedle(D5, {name:"Diesel", minV:-7, maxV:7, minA:30, maxA:330,
+			smallTic:0.25, largeTic:1, textTic:1, colourBars:portstarBar,fontGap:30,
+			fontSize: 25, largeTicColour:"none", textColour:"grey", smallTicColour:"none"} );
+			
+		// Pressure
+		N9bar = new dNeedle(D7, {name:"mBar", maxV:250, smallTic:5, largeTic:50, 
+			fontSize:15, margin:40, fontGap:-13, textDir:"Tangent"});
+			
+		N9mm  = new dNeedle(D7, {name:"mmWc", maxV:2500, smallTic:50, largeTic:500, maxA:324, 
+			needlePath:"none", textColour: "#f00",smallTicColour:"#F00", largeTicColour:"#F00", 
+			fontSize:15, margin:55});			
+		
+		rudLarge = new dNeedle(D8, {name:"windLarge", minV:-40, maxV:40, 
+			smallTic:5, largeTic:10, textTic:10, colourBars:portstarBar} );
+			
+			
+		// Clock
+		clockHour = new dNeedle(D6, {name:"Hour", minV:0, maxV:12, minA:0, maxA:360,
+			smallTic:0.2, largeTicColour:"none", smallTicColour:"none", needlePath:"images/Hour.png"} );
+			
+		clockMinute = new dNeedle(D6, {name:"Min", minV:0, maxV:60, minA:0, maxA:360,
+			smallTic:0.2, largeTicColour:"none", smallTicColour:"none", needlePath:"images/Minute.png"} );
+		
+		clockSecond = new dNeedle(D6, {name:"Sex", minV:0, maxV:60, minA:0, maxA:360,
+			smallTic:0.2, largeTicColour:"none", smallTicColour:"none", needlePath:"images/Second.png"} );
+		
+		// Timer for clock hands only
+		window.setInterval(function(){
+			  Tick();
+			}, 1000);
+			
+		// Min max dial
+		var minMax = new dDial( { element:"minmaxDial", name:"Min Max test dial" });
+		minMaxNeedle = new dNeedle(minMax, {name:"Needle", showMaxMin:true});
+
+		// Triple examples at bottom of page
+		var dt1 = new dDial( { element:'dialText1', name:'textDir:Horizontal',size: 250});
+		var dt2 = new dDial( { element:'dialText2', name:'textDir:Tangent',size: 250});
+		var dt3 = new dDial( { element:'dialText3', name:'textDir:Normal',size: 250});
+		var ndt1 = new dNeedle(dt1, {name:"Needle", size:150});
+		var ndt2 = new dNeedle(dt2, {name:"Needle", size:150,textDir:"Tangent"});
+		var ndt3 = new dNeedle(dt3, {name:"Needle", size:150,textDir:"Normal"});
+		
+		var dt4 = new dDial( { element:'dialMar1', name:'margin:default',size: 250});
+		var dt5 = new dDial( { element:'dialMar2', name:'margin:5',size: 250});
+		var dt6 = new dDial( { element:'dialMar3', name:'margin:40',size: 250});
+		var ndt4 = new dNeedle(dt4, {name:"Needle", size:150});
+		var ndt5 = new dNeedle(dt5, {name:"Needle", size:150,margin:5});
+		var ndt6 = new dNeedle(dt6, {name:"Needle", size:150,margin:40});
+	}
+
+	function Tick(){
+		var dateT = new Date();
+		var hh = dateT.getHours() + 6;
+		while ( hh > 12 ) hh-=12;
+		var mm = dateT.getMinutes()+30;
+		while (mm>60) mm -=60;
+		var ss = dateT.getSeconds()+30;
+		while (ss>60) ss -= 60;
+		
+		clockHour.setValue(hh);
+		clockMinute.setValue(mm);
+		clockSecond.setValue(ss);
+	}
+	
+	function callUpdate(){
+		slid = document.getElementById("slider");
+		value = slid.value;
+		update(N1, value);
+		update(N2, value);
+		update(N3, value);
+		update(N4, value);
+		update(N5, value);
+		update(N6, value);
+		update(N7, value);
+		update(N8, value);
+		update(N9bar, value);
+		update(rudLarge, value);
+		update(minMaxNeedle, value);
+	}
+
+	function update(dNeedle, value) {
+		range = (dNeedle.options.maxV - dNeedle.options.minV);
+		mul = range/100 * value;
+		dNeedle.setValue(dNeedle.options.minV + mul);
+	}
+
+	function SetOff(){
+		N1.setMin();
+		N2.setMin();
+		N3.setMin();
+		N4.setMin();
+		N5.setMin();
+		N6.setMin();
+		N7.setMin();
+		N8.setMin();
+		N9bar.setMin();
+		minMaxNeedle.setmin();
+	}
+
+	function SetOn(){
+		N1.setMax();
+		N2.setMax();
+		N3.setMax();
+		N4.setMax();
+		N5.setMax();
+		N7.setMax();
+		N6.setMax();
+		N8.setMax();
+		N9bar.setMax();
+		minMaxNeedle.setMax();
+	}
+	
+</script>
+</html>
