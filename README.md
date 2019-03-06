@@ -28,6 +28,7 @@ var myDial = new dDial( {
 
 And for the needle we have the following (all angles measured from bottom centre clockwise);
 
+<pre>
 var myNeedle = new dNeedle(  
   myDial, _(Mandatory)_ Handle to dial to put the needle on
   {
@@ -63,9 +64,11 @@ var myNeedle = new dNeedle(
   minMaxRadius       : 75,            _(default)_ The offset from the dial outer edge to draw from
   minMaxWidth        : 20             _(default)_ The width of the line to draw
   });
+</pre>
 
 ColourBars is an array which allows you to draw the gradients or solid colours around the edge of the needle dial. Simple specify as below and pass the array into the needle when creating it.
 
+<pre>
 var portstarBar =
   [
    {minA: 30, maxA: 180, minCol: "#f00", maxCol: "#000", width: 10},
@@ -78,3 +81,4 @@ var portstarBar =
   maxCol - The colour to end on (can be the same as minCol for solid
   width  - How thick should this bar be.  Note if negative then the bar
            is drawn outside of the dial Tics, See multi example above.
+</pre>
