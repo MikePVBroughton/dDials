@@ -7,7 +7,7 @@ These dials are free to use, butcher and report bugs on. They are designed prime
 
 The are a multitude of dials shown in the example file, Dials.html in the src folder.
 
-The same file is hosted here : [a link](http://www.narinasolutions.com/Dials/Dial.html)
+The same file is hosted here : [a link](https://www.narinasolutions.com/Dials/Dial.html)
 
 For a dial we have the following options;
 
